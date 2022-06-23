@@ -1,0 +1,16 @@
+---
+- name: Upload static website to primary bucket
+  hosts: localhost
+  vars_files:
+    - vars.yml
+  tasks:
+    # TODO: We'll likely have to actually build the website, in the future.
+    - name: Clone the website repository
+      ansible.builtin.git:
+        repo: git@github.com:open-shaiya/www.openshaiya.org.git
+        dest: ./openshaiya_website/
+
+    - name: Upload the website to the s3 bucket
+      community.aws.s3_sync:
+        bucket: "{{ primary_bucket }}"
+        file_root: ./openshaiya_website/www/
