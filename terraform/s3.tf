@@ -80,3 +80,12 @@ data "aws_iam_policy_document" "archive_website" {
         ]
     }
 }
+
+resource "aws_s3_bucket_cors_configuration" "archive" {
+    bucket  = aws_s3_bucket.archive.bucket
+
+    cors_rule {
+        allowed_methods = ["GET"]
+        allowed_origins = ["*"]
+    }
+}
